@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Procédures Fin — Guide d'entretien ADV / Commerciaux</title>
+<style>
+  :root{
+    --bg:#F6F6F3;
+    --surface:#FFFFFF;
+    --border:#E4E2DC;
+    --border-strong:#D6D3CA;
+    --text:#211F1B;
+    --text-muted:#6F6C64;
+    --text-faint:#9C988E;
+
+    --violet-bg:#EFEAFB; --violet:#6D3FD0;
+    --green-bg:#DFF6E6;  --green:#187A43;
+    --orange-bg:#FDE7D2; --orange:#B85C13;
+    --yellow-bg:#FCF0C8; --yellow:#8A5A05;
+
+    --attr-bg:#EEF1FC; --attr-text:#38408A; --attr-border:#C9D0F0;
+    --blank-bg:#FFF6EC; --blank-text:#9A5B12; --blank-border:#EFC796;
+
+    --radius:10px;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Inter","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    font-size:14.5px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .app{
+    display:flex;
+    min-height:100vh;
+  }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar{
+    width:262px;
+    flex:none;
+    background:var(--surface);
+    border-right:1px solid var(--border);
+    padding:20px 12px 20px;
+    position:sticky;
+    top:0;
+    align-self:flex-start;
+    height:100vh;
+    overflow-y:auto;
+  }
+  .sidebar-title{
+    font-size:11.5px;
+    font-weight:600;
+    letter-spacing:.02em;
+    color:var(--text-faint);
+    padding:0 10px 12px;
+  }
+  .proc-nav{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;}
+  .proc-item{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    width:100%;
+    text-align:left;
+    padding:9px 10px;
+    border-radius:8px;
+    border:none;
+    background:transparent;
+    cursor:pointer;
+    font:inherit;
+    color:var(--text);
+  }
+  .proc-item:hover{background:#F1F0EC;}
+  .proc-item.active{background:#F0ECFB;}
+  .proc-badge{
+    flex:none;
+    width:22px;height:22px;
+    border-radius:50%;
+    background:var(--border);
+    color:var(--text-muted);
+    font-size:11.5px;
+    font-weight:600;
+    display:flex;align-items:center;justify-content:center;
+    margin-top:1px;
+  }
+  .proc-item.active .proc-badge{background:var(--violet);color:#fff;}
+  .proc-item-name{font-size:13.6px;font-weight:560;line-height:1.35;}
+  .proc-item-sub{font-size:11.8px;color:var(--text-muted);margin-top:2px;line-height:1.3;}
+  .proc-item-count{
+    font-size:11px;
+    color:var(--blank-text);
+    background:var(--blank-bg);
+    border:1px solid var(--blank-border);
+    border-radius:20px;
+    padding:1px 7px;
+    display:inline-block;
+    margin-top:5px;
+  }
+
+  .sidebar-foot{
+    margin-top:18px;
+    padding:12px 10px 0;
+    border-top:1px solid var(--border);
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .help-btn{
+    width:100%;
+    display:flex;align-items:center;gap:8px;
+    padding:8px 10px;
+    border-radius:8px;
+    border:1px solid var(--border);
+    background:#FBFBFA;
+    color:var(--text);
+    font:inherit;font-size:13px;font-weight:550;
+    cursor:pointer;
+  }
+  .help-btn:hover{background:#F1F0EC;}
+
+  .lang-switch{
+    display:flex;
+    border:1px solid var(--border-strong);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  .lang-btn{
+    flex:1;
+    display:flex;align-items:center;justify-content:center;gap:6px;
+    padding:7px 6px;
+    border:none;
+    background:#fff;
+    color:var(--text-muted);
+    font:inherit;font-size:12.6px;font-weight:600;
+    cursor:pointer;
+  }
+  .lang-btn + .lang-btn{border-left:1px solid var(--border-strong);}
+  .lang-btn.active{background:var(--violet-bg);color:var(--violet);}
+  .lang-btn:hover:not(.active){background:#F6F5F2;}
+  .lang-flag{font-size:14px;line-height:1;}
+
+  /* ---------- Main ---------- */
+  .main{flex:1;min-width:0;display:flex;flex-direction:column;}
+
+  .topbar{
+    position:sticky;top:0;z-index:5;
+    background:var(--surface);
+    border-bottom:1px solid var(--border);
+    padding:14px 28px;
+    display:flex;align-items:center;gap:14px;
+    flex-wrap:wrap;
+  }
+  .topbar-title-wrap{display:flex;flex-direction:column;min-width:0;margin-right:auto;}
+  .topbar-title{display:flex;align-items:center;gap:10px;}
+  .topbar-title h1{font-size:18.5px;font-weight:650;margin:0;letter-spacing:-.01em;}
+  .pill{
+    font-size:11px;font-weight:600;
+    padding:2.5px 9px;border-radius:20px;
+    background:var(--yellow-bg);color:var(--yellow);
+    border:1px solid #EFDFA0;
+    white-space:nowrap;
+  }
+  .topbar-sub{font-size:12.6px;color:var(--text-muted);margin-top:2px;}
+  .toolbar{display:flex;gap:8px;flex:none;}
+  .tbtn{
+    font:inherit;font-size:12.8px;font-weight:560;
+    border:1px solid var(--border-strong);
+    background:#fff;color:var(--text);
+    border-radius:8px;
+    padding:7px 12px;
+    cursor:pointer;
+    display:flex;align-items:center;gap:6px;
+  }
+  .tbtn:hover{background:#F6F5F2;}
+  .tbtn.dark{background:var(--text);border-color:var(--text);color:#fff;}
+  .tbtn.dark:hover{background:#3a3730;}
+
+  .content{
+    padding:26px 32px 90px;
+    max-width:900px;
+  }
+
+  .intro-note{
+    background:#F4F2FC;
+    border:1px solid #E1DAF7;
+    color:#4A3D8F;
+    border-radius:var(--radius);
+    padding:12px 15px;
+    font-size:13.4px;
+    margin-bottom:20px;
+  }
+
+  .attrs-row{
+    display:flex;flex-wrap:wrap;gap:6px;
+    margin-bottom:26px;
+  }
+  .attrs-label{
+    font-size:11.5px;color:var(--text-faint);font-weight:600;
+    letter-spacing:.02em;
+    margin-right:4px;
+    align-self:center;
+  }
+
+  /* ---------- Sections ---------- */
+  .section{margin-bottom:6px;}
+  .section-head{
+    display:flex;align-items:center;gap:8px;
+    cursor:pointer;
+    padding:10px 0;
+    border-top:1px solid var(--border);
+    user-select:none;
+  }
+  .section:first-of-type .section-head{border-top:none;}
+  .section-chevron{
+    flex:none;width:16px;height:16px;color:var(--text-faint);
+    transition:transform .15s ease;
+  }
+  .section.collapsed .section-chevron{transform:rotate(-90deg);}
+  .section-title{font-size:14.5px;font-weight:640;}
+  .section-body{padding:4px 0 22px 2px;}
+  .section.collapsed .section-body{display:none;}
+
+  /* ---------- Branch cards ---------- */
+  .branch{
+    display:flex;gap:10px;
+    padding:14px 0;
+    border-top:1px dashed var(--border);
+  }
+  .branch:first-child{border-top:none;}
+  .branch-num{
+    flex:none;
+    font-size:12.5px;
+    color:var(--text-faint);
+    padding-top:9px;
+    width:34px;
+    text-align:right;
+    font-variant-numeric:tabular-nums;
+  }
+  .branch-main{flex:1;min-width:0;}
+  .branch-label-row{display:flex;align-items:center;gap:7px;margin-bottom:8px;}
+  .type-chip{
+    flex:none;width:21px;height:21px;border-radius:6px;
+    background:var(--violet-bg);color:var(--violet);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .branch-label{font-size:12.6px;font-weight:700;letter-spacing:.03em;color:var(--text);}
+
+  .cond-box{
+    background:var(--surface);
+    border:1px solid var(--border-strong);
+    border-radius:var(--radius);
+    padding:11px 14px;
+    font-size:13.8px;
+    color:var(--text);
+    margin-bottom:10px;
+  }
+
+  .actions{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;}
+  .action{display:flex;gap:9px;align-items:flex-start;}
+  .action-num{
+    flex:none;font-size:12.5px;color:var(--text-faint);
+    width:15px;padding-top:1px;font-variant-numeric:tabular-nums;
+  }
+  .action-body{flex:1;min-width:0;font-size:13.6px;}
+
+  .action.sub .action-body{display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+  .icon-chip{
+    flex:none;width:19px;height:19px;border-radius:5px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .icon-chip.violet{background:var(--violet-bg);color:var(--violet);}
+  .icon-chip.orange{background:var(--orange-bg);color:var(--orange);}
+  .icon-chip.green{background:var(--green-bg);color:var(--green);}
+  .subproc-link{color:var(--text);text-decoration:underline;text-decoration-color:var(--border-strong);font-weight:560;}
+  .subproc-name{font-weight:650;text-decoration:underline;text-decoration-color:var(--border-strong);}
+  .subproc-arrow{color:var(--text-faint);}
+
+  .action.end .action-body{display:flex;align-items:center;gap:7px;color:var(--text-muted);}
+
+  .team-card{
+    background:#FDFBF7;
+    border:1px solid var(--orange-bg);
+    border-left:3px solid var(--orange);
+    border-radius:var(--radius);
+    padding:12px 14px;
+  }
+  .team-card-head{display:flex;align-items:center;gap:7px;margin-bottom:7px;}
+  .team-card-head span{font-size:11.8px;font-weight:650;color:var(--orange);letter-spacing:.02em;}
+  .team-card-body{font-size:13.5px;color:var(--text);}
+  .team-card-foot{
+    margin-top:9px;padding-top:8px;border-top:1px solid #F1E6D8;
+    font-size:11.3px;color:var(--text-faint);
+  }
+
+  /* inline tokens */
+  .attr-chip{
+    display:inline-flex;align-items:center;gap:3px;
+    background:var(--attr-bg);color:var(--attr-text);
+    border:1px solid var(--attr-border);
+    border-radius:5px;padding:0px 5px;
+    font-size:12.6px;font-weight:560;
+    text-decoration:underline;text-decoration-color:#B9C2ED;
+    white-space:nowrap;
+  }
+  .blank-chip{
+    display:inline-flex;align-items:center;gap:3px;
+    background:var(--blank-bg);color:var(--blank-text);
+    border:1px dashed var(--blank-border);
+    border-radius:5px;padding:0px 6px;
+    font-size:12.4px;font-style:italic;font-weight:520;
+    white-space:nowrap;
+  }
+  .update-chip{
+    display:inline-flex;align-items:center;gap:3px;
+    background:var(--yellow-bg);color:var(--yellow);
+    border:1px solid #EFDFA0;
+    border-radius:5px;padding:0px 5px;
+    font-size:12.6px;font-weight:560;
+    text-decoration:underline;text-decoration-color:#E3C877;
+    white-space:nowrap;
+  }
+  .call-chip{
+    display:inline-flex;align-items:center;gap:3px;
+    background:var(--green-bg);color:var(--green);
+    border:1px solid #BFE9CC;
+    border-radius:5px;padding:0px 5px;
+    font-size:12.6px;font-weight:560;
+    text-decoration:underline;text-decoration-color:#8FCFA5;
+    white-space:nowrap;
+  }
+  .chip-svg{width:11px;height:11px;flex:none;}
+
+  /* ---------- Sub-procedures footer ---------- */
+  .subprocs{
+    margin-top:8px;
+    border-top:1px solid var(--border);
+    padding-top:16px;
+  }
+  .subprocs-title{font-size:12px;font-weight:650;color:var(--text-faint);letter-spacing:.02em;margin-bottom:10px;}
+  .subprocs-list{display:flex;flex-wrap:wrap;gap:7px;}
+  .subproc-chip{
+    display:flex;align-items:center;gap:6px;
+    background:var(--surface);border:1px solid var(--border-strong);
+    border-radius:8px;padding:6px 10px;
+    font-size:12.6px;font-weight:550;
+  }
+
+  /* ---------- Legend / help panel ---------- */
+  .overlay{
+    position:fixed;inset:0;background:rgba(30,28,22,.32);
+    display:none;align-items:flex-start;justify-content:flex-end;
+    z-index:50;
+  }
+  .overlay.open{display:flex;}
+  .panel{
+    width:420px;max-width:92vw;height:100vh;
+    background:var(--surface);
+    box-shadow:-8px 0 28px rgba(0,0,0,.12);
+    padding:24px 24px 40px;
+    overflow-y:auto;
+  }
+  .panel-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;}
+  .panel-head h2{font-size:17px;margin:0;font-weight:650;}
+  .panel-close{border:none;background:none;cursor:pointer;color:var(--text-muted);padding:4px;}
+  .panel-sub{font-size:12.8px;color:var(--text-muted);margin-bottom:18px;}
+  .legend-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:26px;}
+  .legend-table th{
+    text-align:left;font-size:11px;color:var(--text-faint);
+    font-weight:650;letter-spacing:.02em;
+    padding-bottom:7px;border-bottom:1px solid var(--border);
+  }
+  .legend-table td{padding:9px 8px 9px 0;border-bottom:1px solid #F0EFEA;vertical-align:top;}
+  .legend-table td:first-child{white-space:nowrap;padding-right:12px;}
+  .panel h3{font-size:13px;margin:0 0 10px;font-weight:650;}
+  .atelier-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;}
+  .atelier-list li{display:flex;gap:10px;font-size:13px;}
+  .atelier-time{flex:none;width:52px;color:var(--text-faint);font-variant-numeric:tabular-nums;}
+
+  @media (max-width:880px){
+    .app{flex-direction:column;}
+    .sidebar{
+      width:100%;height:auto;position:static;
+      border-right:none;border-bottom:1px solid var(--border);
+      padding:14px 10px;
+    }
+    .proc-nav{flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:2px;}
+    .proc-item{flex:none;width:auto;flex-direction:column;align-items:center;text-align:center;min-width:96px;}
+    .proc-item-sub,.proc-item-count{display:none;}
+    .content{padding:20px 16px 70px;}
+    .topbar{padding:12px 16px;}
+  }
+
+  @media print{
+    .sidebar,.toolbar,.overlay{display:none !important;}
+    .topbar{position:static;border-bottom:2px solid #000;}
+    .content{max-width:none;padding:0;}
+    body{background:#fff;}
+    .section.collapsed .section-body{display:block !important;}
+    .section-chevron{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-title" id="sidebarTitle"></div>
+    <ul class="proc-nav" id="procNav"></ul>
+    <div class="sidebar-foot">
+      <div class="lang-switch">
+        <button class="lang-btn" id="langFr" data-lang="fr"><span class="lang-flag">🇫🇷</span> FR</button>
+        <button class="lang-btn" id="langEn" data-lang="en"><span class="lang-flag">🇬🇧</span> EN</button>
+      </div>
+      <button class="help-btn" id="legendBtn">
+        <svg class="chip-svg" style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 .5c0 1.6-2.5 1.9-2.5 3.5"/><circle cx="12" cy="17" r=".1" fill="currentColor" stroke-width="2.5"/></svg>
+        <span id="legendBtnLabel"></span>
+      </button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-title-wrap">
+        <div class="topbar-title">
+          <h1 id="procTitle"></h1>
+          <span class="pill" id="draftPill"></span>
+        </div>
+        <div class="topbar-sub" id="procSub"></div>
+      </div>
+      <div class="toolbar">
+        <button class="tbtn" id="toggleAllBtn"></button>
+        <button class="tbtn dark" id="printBtn" onclick="window.print()">
+          <svg class="chip-svg" style="width:13px;height:13px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+          <span id="printBtnLabel"></span>
+        </button>
+      </div>
+    </div>
+    <div class="content" id="content"></div>
+  </main>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="panel">
+    <div class="panel-head">
+      <h2 id="panelTitle"></h2>
+      <button class="panel-close" id="panelClose">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="panel-sub" id="panelSub"></div>
+    <div id="legendContent"></div>
+  </div>
+</div>
+
+<script>
+/* ---------------- Language helper ---------------- */
+let LANG = 'fr';
+function L(fr, en){ return { fr: fr, en: en }; }
+function T(x){
+  if(x && typeof x === 'object' && ('fr' in x)) return x[LANG];
+  return x;
+}
+
+/* ---------------- Icons ---------------- */
+const ICONS = {
+  branchArrow: '<svg class="chip-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>',
+  update: '<svg class="chip-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg>',
+  call: '<svg class="chip-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h13M15 3l4 4-4 4"/><path d="M18 17H5M9 21l-4-4 4-4"/></svg>',
+  attr: '<svg class="chip-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6L2 12l6 6M16 6l6 6-6 6"/></svg>',
+  sub: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"><circle cx="4" cy="6" r="1.3" fill="currentColor" stroke="none"/><path d="M9 6h11"/><circle cx="4" cy="12" r="1.3" fill="currentColor" stroke="none"/><path d="M9 12h11"/><circle cx="4" cy="18" r="1.3" fill="currentColor" stroke="none"/><path d="M9 18h11"/></svg>',
+  team: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M10 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>',
+  end: '<svg class="chip-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>',
+  chevron: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>'
+};
+
+/* ---------------- UI strings ---------------- */
+const UI = {
+  sidebarTitle: L("Procédures Fin", "Fin procedures"),
+  legendBtnLabel: L("Comment lire l'écran", "How to read the screen"),
+  draftPill: L("Brouillon — à trancher en atelier", "Draft — to settle in workshop"),
+  expandAll: L("Tout déplier", "Expand all"),
+  collapseAll: L("Tout replier", "Collapse all"),
+  printBtnLabel: L("Imprimer", "Print"),
+  pointsToSettle: L("points à trancher", "points to settle"),
+  panelTitle: L("Comment lire l'écran Fin", "How to read the Fin screen"),
+  panelSub: L(
+    "Vocabulaire pour caler tout le monde avant l'atelier — on ne parle pas d'API, on remplit des cartes de branche.",
+    "Vocabulary to get everyone aligned before the workshop — we don't talk about APIs, we fill in branch cards."
+  ),
+  legendColUI: L("Élément UI Fin", "Fin UI element"),
+  legendColPlain: L("En clair", "In plain terms"),
+  attrsUsed: L("Attributs utilisés", "Attributes used"),
+  subprocsTitle: L("SOUS-PROCÉDURES RÉUTILISABLES", "REUSABLE SUB-PROCEDURES"),
+  askTeammateLabel: L("ASK TEAMMATE", "ASK TEAMMATE"),
+  askTeammateFoot: L(
+    "Ask : Default · In : compte client + Slack · Collect : (2) · ~10 min",
+    "Ask: Default · In: customer account + Slack · Collect: (2) · ~10 min"
+  ),
+  runSubProc: L("Run sub-procedure", "Run sub-procedure"),
+  toSettle: L("à trancher", "to settle"),
+  updateLabel: L("Update : ", "Update: "),
+  callLabel: L("Call : ", "Call: "),
+  typeLabels: {
+    IF: L("SI", "IF"),
+    ELSEIF: L("SINON SI", "ELSE IF"),
+    ELSE: L("SINON", "ELSE")
+  },
+  legendRows: [
+    { ui: "Procedure", plain: L("Parcours client (ex. demande de retour)", "Customer journey (e.g. return request)") },
+    { ui: "SI / SINON SI", plain: L("Une branche de décision — « si telle condition… »", "A decision branch — “if such condition…”") },
+    { uiHtml: '<span class="attr-chip">&lt;&gt; Attribute</span>', plain: L("Une info client ou commande (ex. Statut client = VIP)", "A customer or order fact (e.g. Customer status = VIP)") },
+    { uiHtml: '<span class="update-chip">↑ Update</span>', plain: L("Question posée au client → la réponse est stockée", "A question asked to the customer → the answer is stored") },
+    { uiHtml: '<span class="call-chip">⇄ Call</span>', plain: L("Aller chercher ou écrire dans notre système", "Fetch or write to our system") },
+    { ui: L("Dire au client", "Tell the customer"), plain: L("Phrase dite telle quelle au client", "A line said verbatim to the customer") },
+    { uiHtml: '<span class="icon-chip orange" style="display:inline-flex;vertical-align:middle;width:16px;height:16px;">⇄</span> Ask teammate', plain: L("Consigne interne pour l'ADV / le commercial", "Internal instruction for the ops / sales team") },
+    { uiHtml: '<span class="icon-chip violet" style="display:inline-flex;vertical-align:middle;width:16px;height:16px;">☰</span> Run sub-procedure', plain: L("Sous-parcours réutilisable (ex. Refuser retour)", "A reusable sub-flow (e.g. Decline return)") }
+  ],
+  atelierTitle: L("Déroulé atelier suggéré (60–90 min)", "Suggested workshop agenda (60–90 min)"),
+  atelierItems: [
+    { time: "10 min", text: L("Statut VIP + chiffres clés (CA, commandes, fenêtre de retour)", "VIP status + key figures (revenue, orders, return window)") },
+    { time: "25 min", text: L("Procédure Retour en entier (copie de l'écran Fin)", "Full Return procedure (mirrors the Fin screen)") },
+    { time: "20 min", text: L("Annulation + Adresse", "Cancellation + Address") },
+    { time: "15 min", text: L("Geste commercial / remboursement + plafonds", "Goodwill gesture / refund + caps") },
+    { time: "10 min", text: L("Devis (ce que Fin n'a pas le droit de promettre)", "Quotes (what Fin isn't allowed to promise)") },
+    { time: "10 min", text: L("Liste des Call (data connectors) à prévoir côté compte client", "List of Calls (data connectors) needed on the customer-account side") }
+  ]
+};
+
+/* ---------------- Data ---------------- */
+const procedures = [
+{
+  id:'retour', name:L("Demande de retour","Return request"),
+  sub:L("Order return request — cœur opérationnel ADV","Order return request — core ops workflow"),
+  sections:[
+    { label:L("1.1 — Preuves de livraison : qui les détient ?","1.1 — Proof of delivery: who has it?"), branches:[
+      { type:'IF', cond:L(
+          "le motif est cassé / manquant / mauvais produit ET on a déjà le [[call:Get Delivery Proof]] chez nous",
+          "the reason is broken / missing / wrong item AND we already have the [[call:Get Delivery Proof]] on file"),
+        actions:[
+          {t:L("Ne pas redemander la preuve de livraison au client","Don't ask the customer for proof of delivery again")},
+          {t:L("Demander uniquement des photos du produit et du carton ([[update:Temporary.Damage photos]])","Only ask for photos of the product and the box ([[update:Temporary.Damage photos]])")}
+        ]},
+      { type:'ELSEIF', cond:L("la preuve de livraison n'est pas disponible chez nous","proof of delivery isn't available on our side"),
+        actions:[
+          {t:L("Demander une preuve de livraison au client, ou la récupérer côté transporteur (ADV)","Ask the customer for proof of delivery, or get it from the carrier (ops team)")},
+          {k:'team', t:L("Escalader si le montant dépasse [[blank:seuil €]]","Escalate if the amount exceeds [[blank:threshold €]]")}
+        ]},
+      { type:'ELSEIF', cond:L("le motif est un changement d'avis","the reason is a change of mind"),
+        actions:[
+          {t:L("Les preuves de sinistre ne sont pas exigées","Damage evidence isn't required")},
+          {t:L("Vérifier les autres conditions de retour (fenêtre, emballage d'origine…)","Check the other return conditions (window, original packaging…)")}
+        ]}
+    ]},
+    { label:L("1.2 — Article manquant : vérifier tous les envois d'abord","1.2 — Missing item: check every shipment first"), branches:[
+      { type:'IF', cond:L(
+          "le motif est un article manquant ET la commande comporte plusieurs envois ([[call:Get Shipments]]) ET l'article manquant figure dans un envoi pas encore livré",
+          "the reason is a missing item AND the order has several shipments ([[call:Get Shipments]]) AND the missing item is in a shipment not yet delivered"),
+        actions:[
+          {t:L("Vérifier tous les envois liés à la commande avant toute autre action ([[call:Get Shipments]])","Check every shipment linked to the order before doing anything else ([[call:Get Shipments]])")},
+          {t:L("Dire au client : cet article arrive dans un envoi séparé, indiquer la date prévue","Tell the customer: this item is coming in a separate shipment, give the expected date")},
+          {t:L("Ne pas ouvrir de dossier retour ni de renvoi — ce n'est pas un manquant réel","Don't open a return or reshipment case — this isn't a genuine shortfall")}
+        ]},
+      { type:'ELSEIF', cond:L(
+          "le motif est un article manquant ET tous les envois prévus pour la commande ont déjà été livrés",
+          "the reason is a missing item AND every shipment planned for the order has already been delivered"),
+        actions:[
+          {t:L("Confirmer que l'article est réellement manquant","Confirm the item is genuinely missing")},
+          {t:L("Demander une photo du colis / bon de livraison si besoin","Ask for a photo of the parcel / delivery note if needed")},
+          {t:L("Ouvrir un dossier renvoi de la pièce manquante ([[call:Create Missing Item Claim]])","Open a reshipment case for the missing part ([[call:Create Missing Item Claim]])")}
+        ]}
+    ]},
+    { label:L("1.3 — Éligibilité au retour","1.3 — Return eligibility"), branches:[
+      { type:'IF', cond:L(
+          "le motif est cassé, mauvais produit ou manquant ET le délai depuis livraison ≤ [[blank:jours]] ET les preuves requises sont réunies",
+          "the reason is broken, wrong item or missing AND time since delivery ≤ [[blank:days]] AND the required evidence is in hand"),
+        actions:[{t:L("Retour accepté → passer au bloc Issue puis Transport","Return accepted → move to the Outcome then Shipping block")}]},
+      { type:'ELSEIF', cond:L(
+          "le motif est un changement d'avis ET le délai ≤ [[blank:jours]] ET l'emballage permet la revente",
+          "the reason is a change of mind AND the window ≤ [[blank:days]] AND the packaging allows resale"),
+        actions:[
+          {t:L("Retour accepté (le transport est souvent à la charge du client, cf. bloc Transport)","Return accepted (shipping is often at the customer's expense, see Shipping block)")},
+          {t:L("Sinon → refus","Otherwise → decline")}
+        ]},
+      { type:'ELSEIF', cond:L("hors délai ET le [[attr:Statut client]] n'est pas VIP","outside the window AND the [[attr:Customer status]] isn't VIP"),
+        actions:[{k:'sub', n:L("Refuser retour","Decline return")}]},
+      { type:'ELSEIF', cond:L("hors délai ET le [[attr:Statut client]] est VIP","outside the window AND the [[attr:Customer status]] is VIP"),
+        actions:[
+          {t:L("Demander la raison du retour ([[update:Temporary.Return reason]])","Ask for the reason for the return ([[update:Temporary.Return reason]])")},
+          {t:L("Récupérer les infos compte et l'historique ([[call:Get Customers]])","Pull up account info and order history ([[call:Get Customers]])")},
+          {t:L("Prévenir le client qu'un collègue va être associé à la décision","Let the customer know a teammate will weigh in on the decision")},
+          {k:'team', t:L(
+            "Déterminer si ce client VIP doit être accepté malgré le hors délai. Client VIP depuis [[attr:Date de passage VIP]], taux de retour [[attr:Taux de retour]]. Motif indiqué : « [[attr:Motif du retour]] ».",
+            "Decide whether this VIP customer should be accepted despite being outside the window. VIP since [[attr:VIP since]], return rate [[attr:Return rate]]. Stated reason: “[[attr:Return reason]]”."
+          )}
+        ]}
+    ]},
+    { label:L("1.4 — Issue une fois accepté","1.4 — Outcome once accepted"), branches:[
+      { type:'IF', cond:L(
+          "accepté ET motif cassé/mauvais ET montant ≤ [[blank:€]] ET la politique « remplacement sans retour » est active",
+          "accepted AND reason broken/wrong AND amount ≤ [[blank:€]] AND the “replacement without return” policy is active"),
+        actions:[
+          {t:L("Créer un remplacement immédiat ([[call:Create Replacement]])","Create an immediate replacement ([[call:Create Replacement]])")},
+          {t:L("Pas de booking transport retour","No return shipping to book")},
+          {t:L("Email client : confirmation du remplacement + tracking à venir","Email the customer: replacement confirmation + tracking to follow")}
+        ]},
+      { type:'ELSEIF', cond:L("accepté ET la marchandise doit être récupérée","accepted AND the goods need to be collected"),
+        actions:[
+          {t:L("Créer le dossier retour ([[call:Create Return]])","Create the return case ([[call:Create Return]])")},
+          {t:L("Passer au bloc Transport","Move to the Shipping block")}
+        ]},
+      { type:'ELSEIF', cond:L("accepté ET avoir / remboursement sans reprise","accepted AND credit note / refund with no collection"),
+        actions:[
+          {t:L("Émettre l'avoir ou le remboursement ([[call:Credit Note / Refund]])","Issue the credit note or refund ([[call:Credit Note / Refund]])")},
+          {t:L("Email client de confirmation","Confirmation email to the customer")}
+        ]}
+    ]},
+    { label:L("1.5 — Transport retour : qui book, qui paie","1.5 — Return shipping: who books, who pays"), branches:[
+      { type:'IF', cond:L("notre erreur OU un défaut produit","our mistake OR a product defect"),
+        actions:[{t:L("Booking et paiement à notre charge","We book and pay")},{k:'sub', n:L("Book return (nous)","Book return (us)")}]},
+      { type:'ELSEIF', cond:L("changement d'avis ET client standard","change of mind AND standard customer"),
+        actions:[{t:L("Booking et paiement côté client","Customer books and pays")},{t:L("Indiquer l'adresse de retour entrepôt","Give the warehouse return address")}]},
+      { type:'ELSEIF', cond:L("VIP / grand compte ET changement d'avis","VIP / key account AND change of mind"),
+        actions:[{k:'team', t:L("Trancher qui book et qui paie pour ce cas VIP (nous / client remboursé ensuite / au cas par cas)","Decide who books and pays for this VIP case (us / customer reimbursed after / case by case)")}]},
+      { type:'ELSEIF', cond:L("colis encombrant / sur palette","bulky item / on a pallet"),
+        actions:[{t:L("Toujours nous qui bookons l'enlèvement","We always book the collection")},{t:L("Le payeur dépend du motif (cf. matrice)","Who pays depends on the reason (see matrix)")}]}
+    ]},
+    { label:L("1.6 — Emails si nous bookons","1.6 — Emails when we book"), branches:[
+      { type:'IF', cond:L("c'est nous qui réservons le transport retour","we're the one booking the return shipping"),
+        actions:[
+          {t:L("Réserver l'enlèvement / éditer l'étiquette ([[call:Book Return Shipment]])","Book the collection / issue the label ([[call:Book Return Shipment]])")},
+          {t:L("Email client de confirmation","Confirmation email to the customer")},
+          {t:L("Email ou API transporteur si pas déjà automatisé","Email or API to the carrier if not already automated")},
+          {t:L("Email interne si montant > [[blank:€]] OU palette OU VIP","Internal email if amount > [[blank:€]] OR pallet OR VIP")},
+          {t:L("Dire au client : retour organisé, détail envoyé par email","Tell the customer: return arranged, details sent by email")}
+        ]},
+      { type:'ELSEIF', cond:L("c'est le client qui réserve le transport retour","the customer is booking the return shipping"),
+        actions:[
+          {t:L("Email client : adresse de retour + délai d'envoi [[blank:jours]] jours + n° dossier","Email the customer: return address + [[blank:days]]-day shipping window + case number")},
+          {t:L("Pas d'email transporteur de notre côté","No carrier email on our side")},
+          {t:L("Attendre le tracking retour transmis par le client ([[call:Wait for return tracking]])","Wait for the return tracking the customer sends ([[call:Wait for return tracking]])")}
+        ]}
+    ]}
+  ],
+  subprocs:[
+    L("Refuser retour","Decline return"),
+    L("Collecter preuves","Collect evidence"),
+    L("Book return (nous)","Book return (us)"),
+    L("Instructions retour client","Return instructions for customer"),
+    L("Remplacement sans retour","Replacement without return"),
+    L("Ask teammate VIP hors délai","Ask teammate — VIP outside window")
+  ]
+},
+{
+  id:'annulation', name:L("Annuler une commande","Cancel an order"),
+  sub:L("Cancel order","Cancel order"),
+  sections:[
+    { label:L("2.1 — Branches à valider","2.1 — Branches to confirm"), branches:[
+      { type:'IF', cond:L("le statut est devis ou confirmée ET la commande n'est pas payée","status is quote or confirmed AND the order hasn't been paid"),
+        actions:[{t:L("Autoriser l'annulation (Fin + compte)","Allow the cancellation (Fin + account)")},{t:L("Annuler la commande ([[call:Cancel Order]])","Cancel the order ([[call:Cancel Order]])")}]},
+      { type:'ELSEIF', cond:L("payée ET statut pas encore préparation/expédition ET dans les [[blank:h/j]]","paid AND status not yet picking/shipping AND within [[blank:h/d]]"),
+        actions:[{t:L("Autoriser + indiquer le délai de remboursement [[blank:jours]] jours","Allow it + state the refund timeline of [[blank:days]] days")},{t:L("Annuler et rembourser ([[call:Cancel Order + Refund]])","Cancel and refund ([[call:Cancel Order + Refund]])")}]},
+      { type:'ELSEIF', cond:L("VIP ET pas encore expédiée ET hors fenêtre standard","VIP AND not yet shipped AND outside the standard window"),
+        actions:[{t:L("Demander la raison de l'annulation","Ask for the reason for the cancellation")},{t:L("Récupérer le profil client ([[call:Get Customer]])","Pull up the customer profile ([[call:Get Customer]])")},{k:'team', t:L("Décider comme pour un retour VIP hors délai","Decide as with a VIP return outside the window")}]},
+      { type:'ELSEIF', cond:L("déjà expédiée ou livrée","already shipped or delivered"),
+        actions:[{t:L("Indiquer qu'aucune annulation n'est possible","State that cancellation isn't possible")},{k:'sub', n:L("Orienter vers la procédure Retour","Route to the Return procedure")}]},
+      { type:'ELSE', cond:L("aucun des cas ci-dessus","none of the above"),
+        actions:[{k:'team', t:L("Escalader","Escalate")}]}
+    ]}
+  ],
+  subprocs:[]
+},
+{
+  id:'adresse', name:L("Changer l'adresse de livraison","Change the delivery address"),
+  sub:L("Update shipping address","Update shipping address"),
+  sections:[
+    { label:L("3.1 — Branches à valider","3.1 — Branches to confirm"), branches:[
+      { type:'IF', cond:L("pas encore expédiée","not yet shipped"),
+        actions:[{t:L("Demander la nouvelle adresse","Ask for the new address")},{t:L("Mettre à jour l'adresse de livraison ([[call:Update Shipping Address]])","Update the delivery address ([[call:Update Shipping Address]])")}]},
+      { type:'ELSEIF', cond:L("en préparation ET étiquette non éditée","being picked AND label not yet issued"),
+        actions:[{k:'team', t:L("Autoriser dans les [[blank:h]] heures, ou escalader","Allow it within [[blank:h]] hours, or escalate")}]},
+      { type:'ELSEIF', cond:L("déjà expédiée","already shipped"),
+        actions:[{t:L("Indiquer que la commande est en transit → contacter transporteur / SAV","State that the order is in transit → contact the carrier / support")},{k:'team', t:L("Si VIP et parti depuis moins de [[blank:h]] heures → envisager un geste","If VIP and dispatched less than [[blank:h]] hours ago → consider a goodwill gesture")}]}
+    ]}
+  ],
+  subprocs:[]
+},
+{
+  id:'suivi', name:L("Suivi de commande","Order tracking"),
+  sub:L("Where is my order","Where is my order"),
+  intro:L(
+    "Brancher d'abord sur le [[attr:Mode de transport]] : messagerie, affrètement ou last mile — pas un discours unique.",
+    "Branch first on the [[attr:Shipping mode]]: parcel carrier, freight, or last mile — not a single script."
+  ),
+  sections:[
+    { label:L("4.1 — Messagerie (lien de tracking)","4.1 — Parcel carrier (tracking link)"), branches:[
+      { type:'IF', cond:L("le mode de transport est la messagerie ET le [[attr:Lien de tracking]] existe","shipping mode is parcel carrier AND the [[attr:Tracking link]] exists"),
+        actions:[
+          {t:L("Récupérer le tracking ([[call:Get Tracking]])","Pull the tracking ([[call:Get Tracking]])")},
+          {t:L("Indiquer le statut + lien de tracking au client","Give the status + tracking link to the customer")},
+          {t:L("Si statut = livré → proposer preuve / photos en cas de litige","If status = delivered → offer proof / photos in case of a dispute")},
+          {k:'team', t:L("Si statut = incident ou retourné entrepôt → escalader ou sous-procédure litige","If status = incident or returned to warehouse → escalate or dispute sub-procedure")}
+        ]},
+      { type:'ELSEIF', cond:L("messagerie ET pas encore de tracking","parcel carrier AND no tracking yet"),
+        actions:[{t:L("Indiquer : en préparation / chez le transporteur, tracking sous [[blank:h]] heures","State: being prepared / with the carrier, tracking within [[blank:h]] hours")},{k:'team', t:L("Si la date promise est dépassée de plus de [[blank:h]] heures sans tracking → escalader","If the promised date is more than [[blank:h]] hours overdue with no tracking → escalate")}]}
+    ]},
+    { label:L("4.2 — Affrètement (pas de tracking public)","4.2 — Freight (no public tracking)"), branches:[
+      { type:'IF', cond:L("affrètement ET aujourd'hui < date promise","freight AND today < promised date"),
+        actions:[{t:L("Indiquer la fenêtre promise et prévenir en cas de changement","Give the promised window and flag any change")},{t:L("Ne pas créer de ticket affréteur","Don't open a freight-forwarder ticket")}]},
+      { type:'ELSEIF', cond:L("affrètement ET aujourd'hui ≤ date promise + [[blank:jours]] jours","freight AND today ≤ promised date + [[blank:days]] days"),
+        actions:[{t:L("Message de temporisation (texte à rédiger)","Holding message (text to be written)")},{t:L("Créer une note interne uniquement, ou rien","Create an internal note only, or nothing")}]},
+      { type:'ELSEIF', cond:L("affrètement ET aujourd'hui > date promise + [[blank:jours]] jours","freight AND today > promised date + [[blank:days]] days"),
+        actions:[{k:'team', t:L("Relancer le desk fret — commande concernée, retard J+[[blank:jours]]","Chase the freight desk — order in question, delay D+[[blank:days]]")},{t:L("Dire au client : point fait avec le transporteur, rappel sous [[blank:h]] heures","Tell the customer: checking with the carrier, callback within [[blank:h]] hours")}]},
+      { type:'ELSEIF', cond:L("affrètement ET dépassement au-delà du seuil de stress (J+[[blank:jours]] jours)","freight AND overdue beyond the escalation threshold (D+[[blank:days]] days)"),
+        actions:[{k:'team', t:L("Même chose, avec flag urgent","Same, flagged urgent")},{t:L("Email/API auto vers l'affréteur, ou relance humaine uniquement","Automatic email/API to the freight forwarder, or a human chase only")}]}
+    ]},
+    { label:L("4.3 — Last mile (livraison par nos soins)","4.3 — Last mile (our own delivery)"), branches:[
+      { type:'IF', cond:L("last mile ET le client demande une autre date ET délai avant tournée ≥ [[blank:h/j]] ET créneau disponible","last mile AND the customer asks for another date AND lead time before the round ≥ [[blank:h/d]] AND a slot is available"),
+        actions:[{t:L("Reprogrammer la livraison ([[call:Reschedule Delivery]])","Reschedule the delivery ([[call:Reschedule Delivery]])")},{t:L("Confirmer par email/SMS (+ chauffeur / planning)","Confirm by email/SMS (+ driver / planning)")}]},
+      { type:'ELSEIF', cond:L("demande trop tardive (moins de [[blank:h]] heures avant)","request too late (less than [[blank:h]] hours before)"),
+        actions:[{t:L("Non disponible en self-service","Not available self-serve")},{k:'team', t:L("Escalader — trop court pour décaler","Escalate — too short notice to move")}]},
+      { type:'ELSEIF', cond:L("client absent ou échec de livraison","customer absent or delivery failed"),
+        actions:[{k:'team', t:L("Reprogrammer automatiquement une fois, ou escalader","Automatically reschedule once, or escalate")},{k:'team', t:L("Trancher qui paie le 2ᵉ passage (nous / client / selon la cause)","Decide who pays for the 2nd attempt (us / customer / depends on cause)")}]}
+    ]},
+    { label:L("4.4 — Statut amont (pas encore expédié)","4.4 — Upstream status (not yet shipped)"), branches:[
+      { type:'IF', cond:L("pas encore expédié","not yet shipped"),
+        actions:[{t:L("Indiquer le statut (préparation / rupture / attente fournisseur) depuis le système, sans l'inventer","Give the status (picking / out of stock / awaiting supplier) from the system, never invented")},{k:'team', t:L("Si la date promise est dépassée en amont → escalader à l'ADV","If the promised date is overdue upstream → escalate to the ops team")}]}
+    ]}
+  ],
+  subprocs:[
+    L("Partager tracking messagerie","Share parcel tracking"),
+    L("Temporiser affrètement","Hold message — freight"),
+    L("Relancer desk affrètement","Chase the freight desk"),
+    L("Replanifier last mile","Reschedule last mile"),
+    L("Escalade retard","Delay escalation")
+  ]
+},
+{
+  id:'facture', name:L("Facture","Invoice"),
+  sub:L("Get invoice","Get invoice"),
+  sections:[
+    { label:L("5.1 — Branches à valider","5.1 — Branches to confirm"), branches:[
+      { type:'IF', cond:L("client authentifié / titulaire de la commande","customer authenticated / order holder"),
+        actions:[{t:L("Récupérer la facture ([[call:Get Invoice]])","Pull the invoice ([[call:Get Invoice]])")},{t:L("Envoyer ou donner le lien de téléchargement","Send it or give the download link")}]},
+      { type:'ELSE', cond:L("identité non confirmée","identity not confirmed"),
+        actions:[{t:L("Vérifier l'identité du client","Verify the customer's identity")},{k:'team', t:L("Si l'identité ne peut pas être vérifiée → escalader","If identity can't be verified → escalate")}]}
+    ]}
+  ],
+  subprocs:[]
+},
+{
+  id:'geste', name:L("Remboursement / geste commercial","Refund / goodwill gesture"),
+  sub:L("Refund & goodwill","Refund & goodwill"),
+  sections:[
+    { label:L("6.1 — Branches à valider","6.1 — Branches to confirm"), branches:[
+      { type:'IF', cond:L("annulation ou retour déjà validé","cancellation or return already approved"),
+        actions:[{t:L("Effectuer le remboursement ([[call:Refund]])","Process the refund ([[call:Refund]])")}]},
+      { type:'ELSEIF', cond:L(
+          "demande de geste ET (le [[attr:Statut client]] est VIP OU CA 12 mois ≥ [[blank:€]] OU commandes ≥ [[blank:nb]]) ET montant ≤ [[blank:€]]",
+          "goodwill request AND (the [[attr:Customer status]] is VIP OR 12-month revenue ≥ [[blank:€]] OR orders ≥ [[blank:count]]) AND amount ≤ [[blank:€]]"),
+        actions:[{k:'team', t:L("Escalader (plafond), ou traiter automatiquement si validé en atelier","Escalate (cap), or handle automatically if agreed in the workshop")}]},
+      { type:'ELSEIF', cond:L("montant au-dessus du plafond","amount above the cap"),
+        actions:[{k:'team', t:L("Escalader avec validation manager","Escalate with manager approval")}]},
+      { type:'ELSE', cond:L("aucun des cas ci-dessus","none of the above"),
+        actions:[{t:L("Refus poli","Polite decline")},{k:'sub', n:L("Reject goodwill","Reject goodwill")}]}
+    ]}
+  ],
+  subprocs:[]
+},
+{
+  id:'devis', name:L("Devis & révision de prix","Quotes & price revisions"),
+  sub:L("Volume #1 — zone commerciale","Volume #1 — sales team"),
+  sections:[
+    { label:L("7.1 — Branches à valider","7.1 — Branches to confirm"), branches:[
+      { type:'IF', cond:L("nouveau devis catalogue (pas sur-mesure)","new catalogue quote (not custom)"),
+        actions:[{t:L("Orienter vers le compte client","Direct to the customer account")},{t:L("Créer un brouillon de devis ([[call:Create Quote draft]])","Create a draft quote ([[call:Create Quote draft]])")}]},
+      { type:'ELSEIF', cond:L("révision ≤ [[blank:%]] ET (le [[attr:Statut client]] est VIP OU grand compte)","revision ≤ [[blank:%]] AND (the [[attr:Customer status]] is VIP OR key account)"),
+        actions:[{k:'team', t:L("Fast-track commercial (prioritaire)","Fast-track to sales (priority)")},{t:L("Fin ne s'engage jamais sur un prix inventé","Fin never commits to a made-up price")}]},
+      { type:'ELSEIF', cond:L("négociation ou configuration spéciale","negotiation or special configuration"),
+        actions:[{t:L("Collecter le besoin du client","Collect the customer's needs")},{k:'team', t:L("Transmettre au commercial propriétaire du compte","Hand off to the account's sales owner")}]},
+      { type:'ELSEIF', cond:L("devis périmé (plus de [[blank:jours]] jours)","quote expired (more than [[blank:days]] days)"),
+        actions:[{t:L("Indiquer que le devis doit être refait","State that the quote needs to be redone")},{t:L("Regénérer le devis ([[call:Requote]])","Regenerate the quote ([[call:Requote]])")}]}
+    ]}
+  ],
+  subprocs:[]
+},
+{
+  id:'modif', name:L("Modifier une commande","Amend an order"),
+  sub:L("Corriger, ajouter des articles, ou annuler et recommander ?","Fix it, add items, or cancel and reorder?"),
+  intro:L(
+    "Trois familles de demandes bien différentes à distinguer avant de répondre : corriger une ligne existante, ajouter des articles, ou repartir sur une nouvelle commande.",
+    "Three quite different request types to tell apart before answering: fix an existing line, add items, or start a fresh order."
+  ),
+  sections:[
+    { label:L("8.1 — Avant le gel : corriger directement la commande","8.1 — Before the freeze: fix the order directly"), branches:[
+      { type:'IF', cond:L("la commande n'est pas encore en préparation (statut [[blank:statut]] / délai [[blank:jours]] jours)","the order isn't being picked yet (status [[blank:status]] / [[blank:days]]-day window)"),
+        actions:[
+          {t:L("Demander les champs à corriger (référence, couleur, quantité, dimensions…)","Ask which fields to fix (reference, colour, quantity, dimensions…)")},
+          {t:L("Corriger directement sur la commande existante ([[call:Update Order]])","Fix it directly on the existing order ([[call:Update Order]])")},
+          {t:L("Pas besoin d'annuler ni de recréer une commande","No need to cancel or recreate an order")}
+        ]},
+      { type:'ELSEIF', cond:L("VIP et la commande est encore en préparation","VIP and the order is still being picked"),
+        actions:[{k:'team', t:L("Évaluer si une correction tardive est encore possible avec l'entrepôt","Check with the warehouse whether a late fix is still possible")}]}
+    ]},
+    { label:L("8.2 — Le client veut ajouter des articles","8.2 — The customer wants to add items"), branches:[
+      { type:'IF', cond:L("la commande d'origine n'est pas encore expédiée","the original order hasn't shipped yet"),
+        actions:[
+          {t:L("Ajouter les articles à la commande existante — ne pas créer de nouvelle commande ([[call:Update Order]])","Add the items to the existing order — don't create a new one ([[call:Update Order]])")},
+          {t:L("Vérifier l'impact sur le délai de livraison et prévenir le client si besoin","Check the impact on the delivery date and warn the customer if needed")}
+        ]},
+      { type:'ELSEIF', cond:L("la commande d'origine est déjà expédiée ou livrée","the original order has already shipped or been delivered"),
+        actions:[
+          {t:L("Créer une commande complémentaire séparée, liée à la commande d'origine ([[call:Create Order]])","Create a separate follow-on order, linked to the original ([[call:Create Order]])")},
+          {t:L("Prévenir le client d'éventuels frais de port supplémentaires sur ce second envoi","Warn the customer of possible extra shipping costs on this second shipment")}
+        ]}
+    ]},
+    { label:L("8.3 — Erreur détectée après le gel (référence, couleur, quantité)","8.3 — Error found after the freeze (reference, colour, quantity)"), branches:[
+      { type:'IF', cond:L("la commande n'est pas encore expédiée malgré le gel","the order hasn't shipped yet despite the freeze"),
+        actions:[{t:L("Corriger la ligne concernée sur la commande existante ([[call:Update Order]])","Fix the line on the existing order ([[call:Update Order]])")}]},
+      { type:'ELSEIF', cond:L("la commande est déjà expédiée ou déjà livrée","the order has already shipped or been delivered"),
+        actions:[
+          {k:'team', t:L("Trancher : annuler et recréer une commande propre, ou traiter comme un échange une fois le produit reçu","Decide: cancel and recreate a clean order, or treat it as an exchange once the product is received")},
+          {k:'sub', n:L("Orienter vers la procédure Retour si le produit a déjà été reçu","Route to the Return procedure if the product has already been received")}
+        ]},
+      { type:'ELSE', cond:L("aucun des cas ci-dessus","none of the above"),
+        actions:[{t:L("Refus + proposer une alternative (nouvelle commande)","Decline + offer an alternative (new order)")}]}
+    ]}
+  ],
+  subprocs:[]
+},
+{
+  id:'paiement', name:L("Modalités de paiement","Payment methods"),
+  sub:L("Mandat administratif, CHORUS, chèque, virement, CB","Administrative order, CHORUS, cheque, transfer, card"),
+  intro:L(
+    "Aucune procédure dédiée aujourd'hui alors que le sujet revient sans cesse dans les devis — surtout côté administrations et collectivités.",
+    "No dedicated procedure today even though this comes up constantly in quotes — especially with public bodies and local authorities."
+  ),
+  sections:[
+    { label:L("9.1 — Quel moyen de paiement accepter","9.1 — Which payment method to accept"), branches:[
+      { type:'IF', cond:L("le client est une administration ou une collectivité ET demande un règlement par mandat administratif","the customer is a public body or local authority AND requests payment by administrative order"),
+        actions:[
+          {t:L("Indiquer que le règlement se fait via le portail CHORUS Pro, après service fait","State that payment goes through the CHORUS Pro portal, after the service is completed")},
+          {t:L("Transmettre le RIB Gosto ([[call:Get Company Bank Details]])","Send Gosto's bank details ([[call:Get Company Bank Details]])")},
+          {t:L("Demander le numéro d'engagement / bon de commande s'il existe","Ask for the commitment number / purchase order if there is one")}
+        ]},
+      { type:'ELSEIF', cond:L("le client souhaite régler par virement bancaire","the customer wants to pay by bank transfer"),
+        actions:[
+          {t:L("Transmettre le RIB Gosto ([[call:Get Company Bank Details]])","Send Gosto's bank details ([[call:Get Company Bank Details]])")},
+          {t:L("Indiquer que la commande part en préparation dès réception du virement","State that the order goes to picking once the transfer is received")}
+        ]},
+      { type:'ELSEIF', cond:L("le client souhaite régler par chèque","the customer wants to pay by cheque"),
+        actions:[
+          {t:L("Indiquer l'adresse d'envoi du chèque","Give the address to send the cheque to")},
+          {t:L("Indiquer que la commande part en préparation après encaissement","State that the order goes to picking once the cheque clears")}
+        ]},
+      { type:'ELSEIF', cond:L("le client souhaite régler par carte bancaire","the customer wants to pay by card"),
+        actions:[
+          {t:L("Envoyer le lien de paiement CB ([[call:Create Payment Link]])","Send the card payment link ([[call:Create Payment Link]])")},
+          {t:L("Confirmer la réception dès validation du paiement","Confirm receipt once payment clears")}
+        ]}
+    ]},
+    { label:L("9.2 — Délai de paiement à 30 jours / dérogations","9.2 — 30-day payment terms / exceptions"), branches:[
+      { type:'IF', cond:L("le client est une entreprise ou une administration ET demande un paiement à 30 jours date de facture","the customer is a business or public body AND requests 30-day payment terms from invoice date"),
+        actions:[{k:'team', t:L(
+          "Valider l'octroi de conditions à 30 jours selon le profil client. CA 12 mois : [[attr:GMV 12 mois]], statut : [[attr:Statut client]].",
+          "Approve 30-day terms based on the customer profile. 12-month revenue: [[attr:GMV 12 mois]], status: [[attr:Customer status]]."
+        )}]},
+      { type:'ELSE', cond:L("aucun des cas ci-dessus","none of the above"),
+        actions:[{t:L("Proposer les conditions standard (paiement à la commande)","Offer the standard terms (payment on order)")}]}
+    ]},
+    { label:L("9.3 — Justificatifs demandés","9.3 — Supporting documents requested"), branches:[
+      { type:'IF', cond:L("le client demande le RIB ou le KBIS de Gosto","the customer asks for Gosto's bank details or company registration"),
+        actions:[{t:L("Transmettre le document demandé ([[call:Get Company Documents]])","Send the requested document ([[call:Get Company Documents]])")}]},
+      { type:'ELSEIF', cond:L("le client fournit son propre KBIS ou RIB pour un règlement administratif","the customer provides their own company registration or bank details for an administrative payment"),
+        actions:[
+          {t:L("Enregistrer les documents au dossier client","File the documents on the customer record")},
+          {t:L("Confirmer la bonne réception","Confirm receipt")}
+        ]}
+    ]}
+  ],
+  subprocs:[]
+},
+{
+  id:'documents', name:L("Bon de livraison & facture proforma","Delivery note & proforma invoice"),
+  sub:L("Deux documents fréquemment demandés, distincts de la facture finale","Two frequently requested documents, distinct from the final invoice"),
+  intro:L(
+    "Le bon de livraison confirme la réception ; la facture proforma sert avant paiement (budget, douane, validation interne) — ni l'un ni l'autre n'est la facture définitive.",
+    "The delivery note confirms receipt; the proforma invoice is used before payment (budget approval, customs, internal sign-off) — neither one is the final invoice."
+  ),
+  sections:[
+    { label:L("10.1 — Bon de livraison","10.1 — Delivery note"), branches:[
+      { type:'IF', cond:L("client authentifié / titulaire de la commande","customer authenticated / order holder"),
+        actions:[
+          {t:L("Récupérer le bon de livraison ([[call:Get Delivery Note]])","Pull the delivery note ([[call:Get Delivery Note]])")},
+          {t:L("Envoyer ou donner le lien de téléchargement","Send it or give the download link")}
+        ]},
+      { type:'ELSE', cond:L("identité non confirmée","identity not confirmed"),
+        actions:[
+          {t:L("Vérifier l'identité du client","Verify the customer's identity")},
+          {k:'team', t:L("Si l'identité ne peut pas être vérifiée → escalader","If identity can't be verified → escalate")}
+        ]}
+    ]},
+    { label:L("10.2 — Facture proforma","10.2 — Proforma invoice"), branches:[
+      { type:'IF', cond:L("le client demande une facture proforma (avant paiement, pour validation budget ou douane)","the customer requests a proforma invoice (before payment, for budget approval or customs)"),
+        actions:[
+          {t:L("Générer la facture proforma à partir du devis ([[call:Create Proforma Invoice]])","Generate the proforma invoice from the quote ([[call:Create Proforma Invoice]])")},
+          {t:L("Préciser que ce n'est pas la facture définitive — celle-ci arrive après paiement / livraison","Clarify this isn't the final invoice — that one follows payment / delivery")}
+        ]},
+      { type:'ELSEIF', cond:L("le devis n'existe pas encore ou doit être mis à jour avant de générer la proforma","the quote doesn't exist yet or needs updating before the proforma can be generated"),
+        actions:[{k:'sub', n:L("Orienter vers la procédure Devis","Route to the Quotes procedure")}]}
+    ]}
+  ],
+  subprocs:[]
+},
+{
+  id:'sav', name:L("SAV — Produit cassé ou en panne après usage","After-sales — Product broken or faulty after use"),
+  sub:L("Distinct du retour : le produit a fonctionné puis tombe en panne","Different from a return: the product worked, then failed"),
+  intro:L(
+    "Ne pas confondre avec la procédure Retour (produit reçu abîmé ou mauvais dès la livraison) : ici le produit a été utilisé normalement avant de tomber en panne — la question centrale est la garantie, pas la fenêtre de retour.",
+    "Don't confuse this with the Return procedure (product arrived damaged or wrong). Here the product worked fine and then failed — the central question is warranty coverage, not the return window."
+  ),
+  sections:[
+    { label:L("11.1 — Rassembler les preuves","11.1 — Gather evidence"), branches:[
+      { type:'IF', cond:L("le client signale une panne ou une casse survenue après usage","the customer reports a fault or breakage that occurred after use"),
+        actions:[
+          {t:L("Demander une description précise du problème ([[update:Temporary.SAV description]])","Ask for a precise description of the problem ([[update:Temporary.SAV description]])")},
+          {t:L("Demander des photos ou une vidéo du défaut ([[update:Temporary.SAV photos]])","Ask for photos or a video of the fault ([[update:Temporary.SAV photos]])")},
+          {t:L("Récupérer la date d'achat, la référence produit et l'historique de commande ([[call:Get Order]])","Pull the purchase date, product reference and order history ([[call:Get Order]])")}
+        ]}
+    ]},
+    { label:L("11.2 — Déterminer la couverture de garantie","11.2 — Determine warranty coverage"), branches:[
+      { type:'IF', cond:L("date d'achat ≤ [[blank:durée garantie légale]] depuis la livraison ET le défaut n'est pas dû à une mauvaise utilisation ou à l'usure normale","purchase date ≤ [[blank:legal warranty period]] since delivery AND the fault isn't due to misuse or normal wear"),
+        actions:[
+          {t:L("Le produit est couvert par la garantie légale de conformité","The product is covered by the legal conformity warranty")},
+          {k:'team', t:L("Décider entre réparation, remplacement ou remboursement selon le cas","Decide between repair, replacement or refund depending on the case")}
+        ]},
+      { type:'ELSEIF', cond:L("hors garantie légale MAIS une garantie commerciale du fabricant plus longue s'applique à ce produit","outside the legal warranty BUT a longer manufacturer warranty applies to this product"),
+        actions:[
+          {t:L("Vérifier la garantie constructeur ([[call:Get Manufacturer Warranty]])","Check the manufacturer's warranty ([[call:Get Manufacturer Warranty]])")},
+          {k:'team', t:L("Statuer avec le fournisseur sur la prise en charge","Decide with the supplier whether it's covered")}
+        ]},
+      { type:'ELSEIF', cond:L("hors garantie, légale et constructeur","outside both the legal and manufacturer warranty"),
+        actions:[
+          {t:L("Informer poliment le client que le produit est hors garantie","Politely inform the customer the product is out of warranty")},
+          {t:L("Vérifier la disponibilité de pièces détachées ([[call:Get Spare Parts]])","Check spare parts availability ([[call:Get Spare Parts]])")},
+          {t:L("Proposer une réparation ou des pièces payantes si possible","Offer a paid repair or spare parts if possible")}
+        ]}
+    ]},
+    { label:L("11.3 — Résolution une fois la garantie confirmée","11.3 — Resolution once warranty is confirmed"), branches:[
+      { type:'IF', cond:L("sous garantie ET une pièce détachée suffit à résoudre le problème","under warranty AND a spare part is enough to fix it"),
+        actions:[{k:'sub', n:L("Envoyer une pièce détachée sous garantie","Send a warranty spare part")}]},
+      { type:'ELSEIF', cond:L("sous garantie ET le produit doit être remplacé","under warranty AND the product needs replacing"),
+        actions:[{t:L("Créer un remplacement ([[call:Create Replacement]])","Create a replacement ([[call:Create Replacement]])")}]},
+      { type:'ELSEIF', cond:L("sous garantie ET ni pièce ni remplacement n'est possible","under warranty AND neither a part nor a replacement is possible"),
+        actions:[{t:L("Émettre un remboursement ([[call:Refund]])","Issue a refund ([[call:Refund]])")}]}
+    ]}
+  ],
+  subprocs:[L("Envoyer une pièce détachée sous garantie","Send a warranty spare part")]
+}
+];
+
+/* ---------------- Helpers ---------------- */
+function esc(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function parseTokens(raw){
+  let s = esc(raw);
+  s = s.replace(/\[\[attr:([^\]]+)\]\]/g, function(m, label){
+    return '<span class="attr-chip">' + ICONS.attr + esc(label) + '</span>';
+  });
+  s = s.replace(/\[\[blank:([^\]]+)\]\]/g, function(m, label){
+    return '<span class="blank-chip">' + esc(T(UI.toSettle)) + ' · ' + esc(label) + '</span>';
+  });
+  s = s.replace(/\[\[update:([^\]]+)\]\]/g, function(m, label){
+    return '<span class="update-chip">' + ICONS.update + esc(T(UI.updateLabel)) + esc(label) + '</span>';
+  });
+  s = s.replace(/\[\[call:([^\]]+)\]\]/g, function(m, label){
+    return '<span class="call-chip">' + ICONS.call + esc(T(UI.callLabel)) + esc(label) + '</span>';
+  });
+  return s;
+}
+
+function collectProcText(proc){
+  const texts = [];
+  if(proc.intro) texts.push(T(proc.intro));
+  proc.sections.forEach(function(s){
+    s.branches.forEach(function(b){
+      texts.push(T(b.cond));
+      b.actions.forEach(function(a){
+        if(a.t) texts.push(T(a.t));
+        if(a.n) texts.push(T(a.n));
+      });
+    });
+  });
+  return texts.join(' \n ');
+}
+
+function countBlanks(proc){
+  const text = collectProcText(proc);
+  const m = text.match(/\[\[blank:/g);
+  return m ? m.length : 0;
+}
+
+function collectAttrs(proc){
+  const text = collectProcText(proc);
+  const set = new Set();
+  const re = /\[\[attr:([^\]]+)\]\]/g;
+  let m;
+  while((m = re.exec(text))){ set.add(m[1]); }
+  return Array.from(set);
+}
+
+function renderAction(a, idx){
+  const kind = a.k || 'text';
+  if(kind === 'sub'){
+    return '<li class="action sub">' +
+      '<span class="action-num">' + idx + '.</span>' +
+      '<span class="action-body">' +
+        '<span class="icon-chip violet">' + ICONS.sub + '</span>' +
+        '<span class="subproc-link">' + esc(T(UI.runSubProc)) + '</span>' +
+        '<span class="subproc-name">' + esc(T(a.n)) + '</span>' +
+        '<span class="subproc-arrow">→</span>' +
+      '</span>' +
+    '</li>';
+  }
+  if(kind === 'team'){
+    return '<li class="action">' +
+      '<span class="action-num">' + idx + '.</span>' +
+      '<span class="action-body">' +
+        '<div class="team-card">' +
+          '<div class="team-card-head">' +
+            '<span class="icon-chip orange">' + ICONS.team + '</span>' +
+            '<span>' + esc(T(UI.askTeammateLabel)) + '</span>' +
+          '</div>' +
+          '<div class="team-card-body">' + parseTokens(T(a.t)) + '</div>' +
+          '<div class="team-card-foot">' + esc(T(UI.askTeammateFoot)) + '</div>' +
+        '</div>' +
+      '</span>' +
+    '</li>';
+  }
+  if(kind === 'end'){
+    return '<li class="action end">' +
+      '<span class="action-num">' + idx + '.</span>' +
+      '<span class="action-body">' + ICONS.end + '<span>' + esc(T(a.t)) + '</span></span>' +
+    '</li>';
+  }
+  return '<li class="action">' +
+    '<span class="action-num">' + idx + '.</span>' +
+    '<span class="action-body">' + parseTokens(T(a.t)) + '</span>' +
+  '</li>';
+}
+
+function renderBranch(b, num){
+  const actionsHtml = b.actions.map(function(a,i){ return renderAction(a, i+1); }).join('');
+  return '<div class="branch">' +
+    '<div class="branch-num">' + num + '.</div>' +
+    '<div class="branch-main">' +
+      '<div class="branch-label-row">' +
+        '<span class="type-chip">' + ICONS.branchArrow + '</span>' +
+        '<span class="branch-label">' + esc(T(UI.typeLabels[b.type])) + '</span>' +
+      '</div>' +
+      '<div class="cond-box">' + parseTokens(T(b.cond)) + '</div>' +
+      '<ol class="actions">' + actionsHtml + '</ol>' +
+    '</div>' +
+  '</div>';
+}
+
+function renderSection(sec, sIdx){
+  const branchesHtml = sec.branches.map(function(b,i){ return renderBranch(b, (sIdx+1) + '.' + (i+1)); }).join('');
+  return '<div class="section" data-section>' +
+    '<div class="section-head" data-toggle>' +
+      '<span class="section-chevron">' + ICONS.chevron + '</span>' +
+      '<span class="section-title">' + esc(T(sec.label)) + '</span>' +
+    '</div>' +
+    '<div class="section-body">' + branchesHtml + '</div>' +
+  '</div>';
+}
+
+function renderProcedure(proc){
+  document.getElementById('procTitle').textContent = T(proc.name);
+  document.getElementById('procSub').textContent = T(proc.sub);
+
+  const attrs = collectAttrs(proc);
+  const attrsHtml = attrs.length
+    ? '<div class="attrs-row"><span class="attrs-label">' + esc(T(UI.attrsUsed)) + '</span>' +
+      attrs.map(function(a){ return '<span class="attr-chip">' + ICONS.attr + esc(a) + '</span>'; }).join('') +
+      '</div>'
+    : '';
+
+  const introHtml = proc.intro
+    ? '<div class="intro-note">' + parseTokens(T(proc.intro)) + '</div>'
+    : '';
+
+  const sectionsHtml = proc.sections.map(function(s,i){ return renderSection(s,i); }).join('');
+
+  const subprocsHtml = proc.subprocs && proc.subprocs.length
+    ? '<div class="subprocs">' +
+        '<div class="subprocs-title">' + esc(T(UI.subprocsTitle)) + '</div>' +
+        '<div class="subprocs-list">' + proc.subprocs.map(function(n){
+          return '<span class="subproc-chip"><span class="icon-chip violet" style="width:17px;height:17px;">' + ICONS.sub + '</span>' + esc(T(n)) + '</span>';
+        }).join('') + '</div>' +
+      '</div>'
+    : '';
+
+  document.getElementById('content').innerHTML = introHtml + attrsHtml + sectionsHtml + subprocsHtml;
+
+  document.querySelectorAll('[data-toggle]').forEach(function(head){
+    head.addEventListener('click', function(){
+      head.closest('[data-section]').classList.toggle('collapsed');
+    });
+  });
+}
+
+/* ---------------- Sidebar / nav ---------------- */
+let activeId = procedures[0].id;
+
+function renderNav(){
+  document.getElementById('sidebarTitle').textContent = T(UI.sidebarTitle) + ' — ' + procedures.length;
+  document.getElementById('legendBtnLabel').textContent = T(UI.legendBtnLabel);
+  document.getElementById('draftPill').textContent = T(UI.draftPill);
+  document.getElementById('printBtnLabel').textContent = T(UI.printBtnLabel);
+
+  const nav = document.getElementById('procNav');
+  nav.innerHTML = procedures.map(function(p, i){
+    const count = countBlanks(p);
+    return '<li>' +
+      '<button class="proc-item ' + (p.id===activeId?'active':'') + '" data-id="' + p.id + '">' +
+        '<span class="proc-badge">' + (i+1) + '</span>' +
+        '<span>' +
+          '<div class="proc-item-name">' + esc(T(p.name)) + '</div>' +
+          '<div class="proc-item-sub">' + esc(T(p.sub)) + '</div>' +
+          (count ? '<span class="proc-item-count">' + count + ' ' + esc(T(UI.pointsToSettle)) + '</span>' : '') +
+        '</span>' +
+      '</button>' +
+    '</li>';
+  }).join('');
+
+  nav.querySelectorAll('.proc-item').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      activeId = btn.getAttribute('data-id');
+      selectProc(activeId);
+    });
+  });
+}
+
+function selectProc(id){
+  const proc = procedures.find(function(p){ return p.id === id; });
+  renderProcedure(proc);
+  renderNav();
+  window.scrollTo(0,0);
+}
+
+/* ---------------- Legend panel ---------------- */
+function renderLegend(){
+  document.getElementById('panelTitle').textContent = T(UI.panelTitle);
+  document.getElementById('panelSub').textContent = T(UI.panelSub);
+
+  const rows = UI.legendRows.map(function(r){
+    const uiCell = r.uiHtml ? r.uiHtml : ('<b>' + esc(T(r.ui)) + '</b>');
+    return '<tr><td>' + uiCell + '</td><td>' + esc(T(r.plain)) + '</td></tr>';
+  }).join('');
+
+  const atelier = UI.atelierItems.map(function(it){
+    return '<li><span class="atelier-time">' + it.time + '</span><span>' + esc(T(it.text)) + '</span></li>';
+  }).join('');
+
+  document.getElementById('legendContent').innerHTML =
+    '<table class="legend-table">' +
+      '<thead><tr><th>' + esc(T(UI.legendColUI)) + '</th><th>' + esc(T(UI.legendColPlain)) + '</th></tr></thead>' +
+      '<tbody>' + rows + '</tbody>' +
+    '</table>' +
+    '<h3>' + esc(T(UI.atelierTitle)) + '</h3>' +
+    '<ul class="atelier-list">' + atelier + '</ul>';
+}
+
+/* ---------------- Toolbar: expand / collapse all ---------------- */
+let allExpanded = true;
+function updateToggleAllLabel(){
+  document.getElementById('toggleAllBtn').textContent = T(allExpanded ? UI.collapseAll : UI.expandAll);
+}
+document.getElementById('toggleAllBtn').addEventListener('click', function(){
+  allExpanded = !allExpanded;
+  document.querySelectorAll('[data-section]').forEach(function(sec){
+    sec.classList.toggle('collapsed', !allExpanded);
+  });
+  updateToggleAllLabel();
+});
+
+/* ---------------- Legend panel toggle ---------------- */
+const overlay = document.getElementById('overlay');
+document.getElementById('legendBtn').addEventListener('click', function(){ overlay.classList.add('open'); });
+document.getElementById('panelClose').addEventListener('click', function(){ overlay.classList.remove('open'); });
+overlay.addEventListener('click', function(e){ if(e.target === overlay) overlay.classList.remove('open'); });
+
+/* ---------------- Language switch ---------------- */
+function setLang(lang){
+  LANG = lang;
+  document.documentElement.lang = lang;
+  document.getElementById('langFr').classList.toggle('active', lang === 'fr');
+  document.getElementById('langEn').classList.toggle('active', lang === 'en');
+  renderNav();
+  selectProc(activeId);
+  renderLegend();
+  updateToggleAllLabel();
+}
+document.getElementById('langFr').addEventListener('click', function(){ setLang('fr'); });
+document.getElementById('langEn').addEventListener('click', function(){ setLang('en'); });
+
+/* ---------------- Init ---------------- */
+setLang('fr');
+</script>
+</body>
+</html>
